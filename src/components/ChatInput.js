@@ -11,7 +11,7 @@ const ChatInput = (props) => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    if(!channelId) {
+    if (!channelId) {
       return false;
     }
 
@@ -19,19 +19,25 @@ const ChatInput = (props) => {
       message: input,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       user: "Jake Gyllenhaal",
-      avatar: "https://i.guim.co.uk/img/media/29038e9c9f014ac49fb58d9ef0a8518522cf7441/0_96_3000_1800/master/3000.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b78316839adae48c216fced74aaf55f0"
-    })
+      avatar:
+        "https://i.guim.co.uk/img/media/29038e9c9f014ac49fb58d9ef0a8518522cf7441/0_96_3000_1800/master/3000.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b78316839adae48c216fced74aaf55f0",
+    });
 
     setInput("");
   };
   return (
     <ChatInputContainer>
+      {channelId ?
       <form>
-        <input value={input} onChange={e => setInput(e.target.value)} placeholder={`Message #${channelName.toLowerCase()}`} />
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={`Message #${channelName}`}
+        />
         <Button hidden type="submit" onClick={sendMessage}>
           SEND
         </Button>
-      </form>
+      </form> : <></>}
     </ChatInputContainer>
   );
 };

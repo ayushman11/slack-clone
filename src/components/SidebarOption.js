@@ -14,7 +14,7 @@ const SidebarOption = (props) => {
     const channelName = prompt("Please enter the channel name: ");
     if(channelName) {
         db.collection("rooms").add({
-            name: channelName
+            name: channelName.toLowerCase(),
         })
     }
   };
