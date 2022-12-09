@@ -1,5 +1,5 @@
 import { InfoOutlined, StarBorder } from "@mui/icons-material";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectRoomId } from "../features/appSlice";
