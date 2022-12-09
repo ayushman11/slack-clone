@@ -37,6 +37,7 @@ const HeaderContainer = styled.div`
   width: 100%;
   background-color: var(--slack-color);
   color: white;
+  z-index: 999;
 `;
 
 const HeaderLeft = styled.div`
