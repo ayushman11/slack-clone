@@ -1,5 +1,5 @@
 import { InfoOutlined, StarBorder } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectRoomId } from "../features/appSlice";
@@ -22,7 +22,6 @@ const Chat = () => {
         .orderBy("timestamp", "asc")
   );
 
-
   return (
     <ChatContainer>
       <Header>
@@ -42,6 +41,7 @@ const Chat = () => {
         {roomMessages?.docs.map((doc) => {
           return <Message key={doc.id} {...doc.data()} />;
         })}
+        <div id="lastMsg" style={{paddingBottom: "200px"}}></div>
       </ChatMessages>
       <ChatInput channelName={roomDetails?.data().name} channelId={roomId} />
     </ChatContainer>
@@ -55,6 +55,10 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 20px;
   border-bottom: 1px solid lightgray;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background-color: white;
 `;
 
 const HeaderLeft = styled.div`
@@ -88,6 +92,7 @@ const ChatContainer = styled.div`
   flex: 0.7;
   flex-grow: 1;
   overflow-y: scroll;
+  height: 50%;
   margin-top: 60px;
 `;
 

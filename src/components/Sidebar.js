@@ -15,12 +15,14 @@ import {
   Add,
 } from "@mui/icons-material";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 import SidebarOption from "./SidebarOption";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Sidebar = () => {
   const [channels] = useCollection(db.collection("rooms"));
+  const [user] = useAuthState(auth);
 
   return (
     <SidebarContainer>
@@ -29,7 +31,7 @@ const Sidebar = () => {
           <h2>HANGOVER IV HQ</h2>
           <h3>
             <FiberManualRecordIcon />
-            Ayushman Choudhary
+            {user.displayName}
           </h3>
         </SidebarInfo>
         <Create />

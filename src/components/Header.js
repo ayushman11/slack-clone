@@ -4,13 +4,21 @@ import { Avatar } from "@mui/material";
 import { AccessTime } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import { HelpOutline } from "@mui/icons-material";
+import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Header = () => {
+  const [user] = useAuthState(auth);
+
   return (
     <HeaderContainer>
       {/* Header Left */}
       <HeaderLeft>
-        <HeaderAvatar />
+        <HeaderAvatar
+          src={user?.photoURL}
+          alt={user?.displayName}
+          onClick={() => auth.signOut()}
+        />
         <AccessTime />
       </HeaderLeft>
       {/* Header Search */}
@@ -74,14 +82,14 @@ const HeaderSearch = styled.div`
 `;
 
 const HeaderRight = styled.div`
-    flex: 0.3;
-    display: flex;
-    justify-content: flex-end;
-    
-    > .MuiSvgIcon-root {
-        margin-left: auto;
-        margin-right: 20px;
-    }
+  flex: 0.3;
+  display: flex;
+  justify-content: flex-end;
+
+  > .MuiSvgIcon-root {
+    margin-left: auto;
+    margin-right: 20px;
+  }
 `;
 
 const HeaderAvatar = styled(Avatar)`
