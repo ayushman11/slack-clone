@@ -5,7 +5,7 @@ const Message = (props) => {
   const { avatar, user, message, timestamp } = props;
   return (
     <MessageContainer>
-      <img src={avatar} alt="" />
+      <img src={avatar} alt="" referrerPolicy="no-referrer"/>
       <MessageInfo>
         <h4>
           {user} <span>{new Date(timestamp?.toDate()).toUTCString()}</span>

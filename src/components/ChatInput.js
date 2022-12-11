@@ -6,7 +6,7 @@ import firebase from "firebase/compat/app";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const ChatInput = (props) => {
-  const { channelName, channelId } = props;
+  const { channelName, channelId} = props;
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
 
@@ -24,6 +24,8 @@ const ChatInput = (props) => {
     });
 
     setInput("");
+
+    document.getElementById("lastMsg").scrollIntoView({behavior: "smooth"});
   };
   return (
     <ChatInputContainer>

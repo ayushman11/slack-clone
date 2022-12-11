@@ -1,58 +1,51 @@
 import React from "react";
+import { AppBar, Toolbar, Avatar } from "@mui/material";
+import { AccessTime, Search, HelpOutline } from "@mui/icons-material";
 import styled from "styled-components";
-import { Avatar } from "@mui/material";
-import { AccessTime } from "@mui/icons-material";
-import { Search } from "@mui/icons-material";
-import { HelpOutline } from "@mui/icons-material";
-import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 
 const Header = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <HeaderContainer>
-      {/* Header Left */}
-      <HeaderLeft>
-        <HeaderAvatar
-          src={user?.photoURL}
-          alt={user?.displayName}
-          onClick={() => auth.signOut()}
-        />
-        <AccessTime />
-      </HeaderLeft>
-      {/* Header Search */}
-      <HeaderSearch>
-        <Search />
-        <input placeholder="Search channel, workspace, DM, ..." />
-      </HeaderSearch>
-      {/* Header Right */}
-      <HeaderRight>
-        <HelpOutline />
-      </HeaderRight>
-    </HeaderContainer>
+    <AppBar
+      position="fixed"
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: "#3f0f40",
+      }}
+    >
+      <Toolbar>
+        <HeaderLeft>
+          <HeaderAvatar
+            src={user?.photoURL}
+            alt={user?.displayName}
+            onClick={() => auth.signOut()}
+            referrerPolicy="no-referrer"
+          />
+          <AccessTime />
+        </HeaderLeft>
+        {/* Header Search */}
+        <HeaderSearch>
+          <Search />
+          <input placeholder="Search channel, workspace, DM, ..." />
+        </HeaderSearch>
+        {/* Header Right */}
+        <HeaderRight>
+          <HelpOutline />
+        </HeaderRight>
+      </Toolbar>
+    </AppBar>
   );
 };
 
 export default Header;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  position: fixed;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  width: 100%;
-  background-color: var(--slack-color);
-  color: white;
-  z-index: 999;
-`;
-
 const HeaderLeft = styled.div`
   display: flex;
   flex: 0.3;
   align-items: center;
-  margin-left: 20px;
 
   > .MuiSvgIcon-root {
     margin-left: auto;
@@ -88,7 +81,6 @@ const HeaderRight = styled.div`
 
   > .MuiSvgIcon-root {
     margin-left: auto;
-    margin-right: 20px;
   }
 `;
 

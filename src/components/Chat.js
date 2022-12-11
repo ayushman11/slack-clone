@@ -1,5 +1,5 @@
 import { InfoOutlined, StarBorder } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectRoomId } from "../features/appSlice";
@@ -13,7 +13,7 @@ const Chat = () => {
   const [roomDetails] = useDocument(
     roomId && db.collection("rooms").doc(roomId)
   );
-  const [roomMessages] = useCollection(
+  const [roomMessages, loading] = useCollection(
     roomId &&
       db
         .collection("rooms")
@@ -21,6 +21,10 @@ const Chat = () => {
         .collection("messages")
         .orderBy("timestamp", "asc")
   );
+
+  useEffect(() => {
+    document.getElementById("lastMsg").scrollIntoView({ behavior: "smooth" });
+  }, [roomId, loading]);
 
   return (
     <ChatContainer>
@@ -41,9 +45,12 @@ const Chat = () => {
         {roomMessages?.docs.map((doc) => {
           return <Message key={doc.id} {...doc.data()} />;
         })}
-        <div id="lastMsg" style={{paddingBottom: "200px"}}></div>
+        <div id="lastMsg" style={{ paddingBottom: "200px" }}></div>
       </ChatMessages>
-      <ChatInput channelName={roomDetails?.data().name} channelId={roomId} />
+      <ChatInput
+        channelName={roomDetails?.data().name}
+        channelId={roomId}
+      />
     </ChatContainer>
   );
 };
@@ -79,7 +86,6 @@ const HeaderLeft = styled.div`
 const HeaderRight = styled.div`
   > p {
     display: flex;
-    align-items: center;
     font-size: 14px;
   }
   > p .MuiSvgIcon-root {
@@ -91,9 +97,10 @@ const HeaderRight = styled.div`
 const ChatContainer = styled.div`
   flex: 0.7;
   flex-grow: 1;
-  overflow-y: scroll;
-  height: 50%;
   margin-top: 60px;
 `;
 
-const ChatMessages = styled.div``;
+const ChatMessages = styled.div`
+  overflow-y: scroll;
+  height: 510px;
+`;
